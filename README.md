@@ -5,7 +5,6 @@
 > - Tối ưu performance production  
 > - Thiết kế system scale-ready  
 > - Áp dụng Data-Oriented Thinking  
-> - Xây nền tảng để scale indie studio  
 
 ---
 
