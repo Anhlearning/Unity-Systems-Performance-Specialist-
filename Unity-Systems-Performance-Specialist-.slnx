@@ -1,9 +1,14 @@
 ﻿<Solution>
   <Project Path="fps.UI.csproj" />
+  <Project Path="MagicCircleSim.View.csproj" />
   <Project Path="fps.Game.csproj" />
+  <Project Path="MagicCircleSim.Core.csproj" />
+  <Project Path="MagicCircleSim.Preview.csproj" />
   <Project Path="Assembly-CSharp.csproj" />
   <Project Path="fps.Gameplay.csproj" />
+  <Project Path="MagicCircleSim.Editor.csproj" />
   <Project Path="NavMeshComponentsEditor.csproj" />
+  <Project Path="MagicCircleSim.Tests.csproj" />
   <Project Path="fps.Editor.csproj" />
   <Project Path="fps.AI.csproj" />
   <Project Path="Unity.Microgame.Tutorials.csproj" />

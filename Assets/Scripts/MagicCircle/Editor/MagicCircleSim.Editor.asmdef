@@ -1,0 +1,20 @@
+{
+    "name": "MagicCircleSim.Editor",
+    "rootNamespace": "MagicCircleSim.EditorTools",
+    "references": [
+        "MagicCircleSim.Core",
+        "MagicCircleSim.View",
+        "MagicCircleSim.Preview"
+    ],
+    "includePlatforms": [
+        "Editor"
+    ],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}
