@@ -1,8 +1,11 @@
 {
   "dependencies": {
+    "com.coplaydev.unity-mcp": "https://github.com/CoplayDev/unity-mcp.git?path=/MCPForUnity#main",
     "com.unity.ai.navigation": "2.0.9",
     "com.unity.collab-proxy": "2.11.4",
     "com.unity.connect.share": "4.2.3",
+    "com.unity.entities": "1.4.8",
+    "com.unity.entities.graphics": "1.4.21",
     "com.unity.feature.development": "1.0.2",
     "com.unity.inputsystem": "1.14.2",
     "com.unity.learn.iet-framework": "5.0.2",
