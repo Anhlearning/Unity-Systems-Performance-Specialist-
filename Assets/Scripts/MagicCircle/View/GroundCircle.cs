@@ -2,14 +2,15 @@
 // drawing the editor shows. Its glow follows the cast clock.
 
 using System;
+using MagicCircleSim.Design;
 using UnityEngine;
 
 namespace MagicCircleSim.View
 {
     public sealed class GroundCircle : IDisposable
     {
-        /// <summary>Diameter on the ground, meters.</summary>
-        const float SizeM = 5;
+        /// <summary>Diameter on the ground, meters. A16 sizes an area with no radius rune to this circle.</summary>
+        const float SizeM = (float)(2 * Defaults.CircleRadiusM);
 
         readonly MeshRenderer renderer;
         readonly Mesh mesh;

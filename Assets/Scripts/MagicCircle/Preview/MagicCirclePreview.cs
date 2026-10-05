@@ -2,6 +2,8 @@
 // in the middle, read what the compiler made of it on the right. The 3D stage
 // renders into the middle of the screen and the IMGUI panels frame it.
 
+using System.Collections.Generic;
+using MagicCircleSim.Compiler;
 using MagicCircleSim.View;
 using UnityEngine;
 
@@ -48,6 +50,10 @@ namespace MagicCircleSim.Preview
         {
             stage.SetCircle(session.Circle);
             circlePanel.SetCircle(session.Circle);
+            // While a cast plays, the stage previews the circle live as it is edited.
+            if (!stage.Casting) return;
+            if (session.Spell.Valid) stage.Cast(session.Spell);
+            else stage.Clear();
         }
 
         /// <summary>A cast always performs the spell as it was compiled when it was triggered.</summary>
@@ -124,6 +130,12 @@ namespace MagicCircleSim.Preview
                 Cast();
                 e.Use();
             }
+            if (e.type == EventType.KeyDown && e.keyCode == KeyCode.Escape && stage.Casting)
+            {
+                stage.Stop();
+                e.Use();
+            }
+            MissingHint(middle);
 
             GUILayout.BeginArea(new Rect(middle.x + 12, middle.yMax - 48, middle.width - 24, 40));
             GUILayout.BeginHorizontal();
@@ -131,15 +143,38 @@ namespace MagicCircleSim.Preview
             GUI.enabled = session.Spell.Valid;
             if (GUILayout.Button(stage.Casting ? "Kích hoạt lại  [Space]" : "Kích hoạt  [Space]", skin.Primary, GUILayout.Width(200), GUILayout.Height(34))) Cast();
             GUI.enabled = previous;
+            if (stage.Casting)
+            {
+                GUILayout.Space(8);
+                if (GUILayout.Button("Dừng  [Esc]", skin.Button, GUILayout.Width(110), GUILayout.Height(34))) stage.Stop();
+            }
             GUILayout.Space(12);
             loop = GUILayout.Toggle(loop, " Lặp lại", GUILayout.Height(34));
             GUILayout.FlexibleSpace();
             if (stage.Performance != null)
             {
-                GUILayout.Label($"{stage.Performance.Beat}  {stage.Performance.TimeS:0.00}s", skin.MutedLabel, GUILayout.Height(34));
+                var sustaining = stage.Sustaining ? "  · duy trì" : "";
+                GUILayout.Label($"{stage.Performance.Beat}{sustaining}  {stage.Performance.TimeS:0.00}s", skin.MutedLabel, GUILayout.Height(34));
             }
             GUILayout.EndHorizontal();
             GUILayout.EndArea();
+        }
+
+        /// <summary>Tells the player which required layers to fill before the circle can be cast (A14).</summary>
+        void MissingHint(Rect middle)
+        {
+            var spell = session.Spell;
+            if (spell.Valid) return;
+            var lines = new List<string>();
+            foreach (var d in spell.Diagnostics)
+                if (d.Severity == Severity.Error) lines.Add("• " + d.Message);
+            var style = new GUIStyle(skin.Body) { wordWrap = true, padding = new RectOffset(10, 10, 8, 8) };
+            style.normal.background = skin.PanelTexture;
+            style.normal.textColor = PreviewSkin.Error;
+            var content = new GUIContent("Cần chọn trước khi kích hoạt:\n" + string.Join("\n", lines));
+            var width = Mathf.Min(460, middle.width - 24);
+            var height = style.CalcHeight(content, width);
+            GUI.Label(new Rect(middle.x + 12, middle.y + 12, width, height), content, style);
         }
 
         void Tooltip()

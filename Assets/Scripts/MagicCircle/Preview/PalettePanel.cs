@@ -48,7 +48,15 @@ namespace MagicCircleSim.Preview
             GUILayout.BeginHorizontal();
             foreach (var (id, label, _) in PaletteOptions.Tabs)
             {
-                if (GUILayout.Button(label, id == tab ? skin.TabActive : skin.Tab, GUILayout.Height(28))) tab = id;
+                // A required layer still empty is starred in the error color until it is filled.
+                var missing = (id == PaletteTab.Center && !session.Circle.Center.HasValue) || (id == PaletteTab.V1 && !session.Circle.Nature.HasValue);
+                var style = id == tab ? skin.TabActive : skin.Tab;
+                if (missing)
+                {
+                    style = new GUIStyle(style);
+                    style.normal.textColor = style.hover.textColor = PreviewSkin.Error;
+                }
+                if (GUILayout.Button(missing ? label + " *" : label, style, GUILayout.Height(28))) tab = id;
             }
             GUILayout.EndHorizontal();
             GUILayout.Space(6);

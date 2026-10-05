@@ -11,6 +11,8 @@ namespace MagicCircleSim.Preview
     {
         public static readonly IReadOnlyList<(string name, MagicCircle circle)> All = new[]
         {
+            // Only the two required layers: the material alone, burning on the circle.
+            ("Ngọn lửa", MagicCircle.Empty.WithCenter(ElementId.Hoa).WithNature(NatureId.Tron)),
             ("Hoả cầu", new MagicCircle(ElementId.Hoa, NatureId.Tron, PatternId.Cau,
                 new[] { "form-disk", "count-1", "path-straight", "speed-10", "lifetime-3" })),
             ("Quạt laser", new MagicCircle(ElementId.Hoa, NatureId.Vuong, PatternId.Nhon,

@@ -28,7 +28,8 @@ namespace MagicCircleSim.Preview
             foreach (var diagnostic in spell.Diagnostics)
             {
                 var style = new GUIStyle(skin.Body);
-                style.normal.textColor = diagnostic.Severity == Severity.Error ? PreviewSkin.Error : PreviewSkin.Info;
+                style.normal.textColor = diagnostic.Severity == Severity.Error ? PreviewSkin.Error
+                    : diagnostic.Severity == Severity.Warning ? PreviewSkin.Assume : PreviewSkin.Info;
                 GUILayout.Label("• " + diagnostic.Message, style);
             }
             GUILayout.Space(6);
@@ -40,7 +41,13 @@ namespace MagicCircleSim.Preview
                 GUILayout.Label(row.Label, skin.Body, GUILayout.Width(130));
                 var value = new GUIStyle(skin.Body) { fontStyle = FontStyle.Bold, wordWrap = false };
                 GUILayout.Label(row.Value, value);
-                if (row.Defaulted) GUILayout.Label("mặc định", skin.Tag);
+                if (row.Note != null)
+                {
+                    var note = new GUIStyle(skin.Tag);
+                    note.normal.textColor = row.NoteKind == NoteKind.Required ? PreviewSkin.Error
+                        : row.NoteKind == NoteKind.Ignored ? PreviewSkin.Assume : PreviewSkin.Muted;
+                    GUILayout.Label(row.Note, note);
+                }
                 foreach (var id in row.Assumptions)
                 {
                     var tag = new GUIStyle(skin.Tag);

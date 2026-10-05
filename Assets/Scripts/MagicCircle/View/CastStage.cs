@@ -44,6 +44,9 @@ namespace MagicCircleSim.View
 
         public bool Casting => perf != null;
 
+        /// <summary>A cast with no lifetime rune is playing and has not been stopped (A20).</summary>
+        public bool Sustaining => perf != null && double.IsPositiveInfinity(perf.LifetimeS);
+
         public SpellPerformance Performance => perf;
 
         public Camera Viewer => viewer != null ? viewer : Camera.main;
@@ -82,6 +85,12 @@ namespace MagicCircleSim.View
             startS = Time.timeAsDouble;
         }
 
+        /// <summary>Lets the current cast fade out. A sustained spell only ends this way.</summary>
+        public void Stop() => perf?.Release();
+
+        /// <summary>Removes the current cast at once, without a fade.</summary>
+        public void Clear() => ClearSpell();
+
         void Update()
         {
             if (perf == null) return;
@@ -89,7 +98,7 @@ namespace MagicCircleSim.View
             perf.AdvanceTo(tS);
             visuals.Sync(Viewer);
             visuals.SetOutlineOpacity((float)CastTimeline.OutlineOpacityAt(tS));
-            ground.SetGlow((float)CastTimeline.CircleGlowAt(tS, perf.Spell.Motion.LifetimeS));
+            ground.SetGlow((float)CastTimeline.CircleGlowAt(tS, perf.LifetimeS));
             if (!perf.Done) return;
             ClearSpell();
             Finished?.Invoke();

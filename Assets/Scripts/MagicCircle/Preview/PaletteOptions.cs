@@ -35,11 +35,11 @@ namespace MagicCircleSim.Preview
     {
         public static readonly (PaletteTab tab, string label, string hint)[] Tabs =
         {
-            (PaletteTab.Center, "Tâm", "Ký hiệu nguyên tố, lõi của vòng phép."),
-            (PaletteTab.V1, "Vòng 1", "Bản chất: cách nguyên tố biểu hiện ra môi trường."),
-            (PaletteTab.V2, "Vòng 2", "Pattern: hình dạng nguyên tố thể hiện ra bên ngoài."),
-            (PaletteTab.V3, "Vòng 3", "Hình dạng và vùng xuất hiện. Chỉ một rune hình dạng."),
-            (PaletteTab.V4, "Vòng 4", "Chuyển động, thời gian tồn tại và cách phân bố."),
+            (PaletteTab.Center, "Tâm", "Bắt buộc. Ký hiệu nguyên tố, lõi của vòng phép."),
+            (PaletteTab.V1, "Vòng 1", "Bắt buộc. Bản chất: cách nguyên tố biểu hiện ra môi trường."),
+            (PaletteTab.V2, "Vòng 2", "Tuỳ chọn. Pattern: lõi rắn của mỗi instance. Bỏ trống thì chỉ có vật chất."),
+            (PaletteTab.V3, "Vòng 3", "Tuỳ chọn. Hình dạng và vùng xuất hiện. Bỏ trống thì hiện ngay trên vòng."),
+            (PaletteTab.V4, "Vòng 4", "Tuỳ chọn. Chuyển động, thời gian tồn tại và cách phân bố. Bỏ trống thì đứng yên, duy trì."),
         };
 
         public static readonly RuneCategory[] V3Categories = { RuneCategory.Form, RuneCategory.Radius, RuneCategory.Angle, RuneCategory.Count };

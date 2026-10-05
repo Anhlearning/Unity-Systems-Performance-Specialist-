@@ -34,11 +34,18 @@ namespace MagicCircleSim.Design
             new Assumption("A06", "REV03", "“Phân bố hình tròn” rải bên trong hình tròn, “Phân bố vòng tròn” rải trên viền, theo dòng nguồn 4."),
             new Assumption("A07", null, "Mỗi instance mang hình dạng của Vòng 2 (Nhọn = mũi nhọn, Vuông = khối hộp, Cầu = khối cầu)."),
             new Assumption("A08", null, "“Bay đường thẳng”: mọi instance bay song song về phía trước người cast."),
-            new Assumption("A09", null, "Thiếu rune thì dùng mặc định (xem DEFAULTS). Chỉ “phân bố đều” là mặc định có trong nguồn (V4_RULE_001)."),
+            new Assumption("A09", null, "Ô nào để trống thì phép không có thuộc tính đó, không gán giá trị mặc định. Ngoại lệ duy nhất là “phân bố đều”, mặc định có trong nguồn (V4_RULE_001)."),
             new Assumption("A10", null, "Mỗi loại rune chỉ đặt được một cái. Nguồn chỉ nói rõ điều này cho rune hình dạng (V3_R02)."),
             new Assumption("A11", null, "Góc chiếm diện tích chỉ áp dụng cho hình tròn và vòng tròn (“biến hình tròn thành hình quạt”)."),
             new Assumption("A12", null, "“Đối xứng”: các instance đối xứng gương qua trục phía trước, vị trí lấy ngẫu nhiên có seed."),
             new Assumption("A13", null, "Bay theo vòng tròn quanh vị trí cast với bán kính tối thiểu 1 m, để instance ở tâm vẫn quay."),
+            new Assumption("A14", null, "Bắt buộc có Tâm và Vòng 1: vật chất là Vòng 1 × Tâm (sheet 01), thiếu một trong hai thì chưa biết phép hiện ra thứ gì."),
+            new Assumption("A15", null, "Không có rune hình dạng thì vật chất hiện ngay trên vòng phép, một khối duy nhất ở tâm. Bán kính, góc và số lượng cần có hình dạng mới có tác dụng."),
+            new Assumption("A16", null, "Có hình dạng nhưng không có rune bán kính thì vùng xuất hiện lấy đúng bán kính vòng phép dưới đất (2.5 m)."),
+            new Assumption("A17", null, "Có hình dạng nhưng không có rune số lượng thì vật chất phủ kín cả vùng, không tách thành instance."),
+            new Assumption("A18", null, "Không có Vòng 2 thì không có lõi rắn: chỉ có bản thân vật chất (lửa, nước, gió...)."),
+            new Assumption("A19", null, "Phép chỉ di chuyển khi có cả hướng di chuyển và tốc độ. Thiếu một trong hai thì phép đứng yên."),
+            new Assumption("A20", null, "Không có rune thời gian tồn tại thì phép duy trì đến khi người chơi dừng nó."),
         };
 
         public static string TextOf(string id)
@@ -49,21 +56,19 @@ namespace MagicCircleSim.Design
         }
     }
 
-    /// <summary>What a spell uses when its circle leaves a slot empty (A09).</summary>
+    /// <summary>
+    /// The only values the cast reads when a rune is absent. None of them gives the
+    /// spell a property its circle does not have (A09): an empty slot stays empty.
+    /// </summary>
     public static class Defaults
     {
-        public const NatureId Nature = NatureId.Tron;
-        public const PatternId Pattern = PatternId.Cau;
-        public const FormValue Form = FormValue.Disk;
-        public const double Radius = 2;
-        public const double Angle = 1;
-        public const int Count = 1;
-        public const PathValue Path = PathValue.Straight;
-        public const double Lifetime = 3;
+        /// <summary>V4_RULE_001: the source's own default for laying out several instances.</summary>
         public const DistributionValue Distribution = DistributionValue.Even;
-        public const double Speed = 10;
 
         /// <summary>A13.</summary>
         public const double MinOrbitRadiusM = 1;
+
+        /// <summary>A16: the magic circle's own radius on the ground, meters.</summary>
+        public const double CircleRadiusM = 2.5;
     }
 }

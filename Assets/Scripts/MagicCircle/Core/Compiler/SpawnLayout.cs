@@ -32,8 +32,10 @@ namespace MagicCircleSim.Compiler
 
         static SpawnPoint Polar(double r, double azimuth) => new SpawnPoint(r * Math.Sin(azimuth), r * Math.Cos(azimuth));
 
+        /// <summary>One point per instance. The shape must carry a count: a shape without one fills its area (A17).</summary>
         public static SpawnPoint[] Compute(SpellShape shape, DistributionValue distribution, uint seed)
         {
+            if (shape.Fills) throw new ArgumentException("A shape without a count fills its area and has no spawn points.", nameof(shape));
             var rng = new Mulberry32(seed);
             switch (distribution)
             {
@@ -42,7 +44,7 @@ namespace MagicCircleSim.Compiler
                 case DistributionValue.Symmetric:
                     return SymmetricPoints(shape, rng);
                 default:
-                    var points = new SpawnPoint[shape.Count];
+                    var points = new SpawnPoint[shape.Count.Value];
                     for (var i = 0; i < points.Length; i++) points[i] = RandomPoint(shape, rng, false);
                     return points;
             }
@@ -57,7 +59,7 @@ namespace MagicCircleSim.Compiler
 
         static SpawnPoint[] EvenPoints(SpellShape shape)
         {
-            int n = shape.Count;
+            var n = shape.Count.Value;
             var r = shape.Radius;
             var half = HalfAngle(shape);
             var full = half >= Math.PI;
@@ -101,6 +103,9 @@ namespace MagicCircleSim.Compiler
             return points;
         }
 
+        /// <summary>A uniformly random point anywhere in the shape, for a material that fills its area (A17).</summary>
+        public static SpawnPoint PointIn(SpellShape shape, Mulberry32 rng) => RandomPoint(shape, rng, false);
+
         /// <summary>One point anywhere in the shape. <paramref name="rightHalfOnly"/> serves the symmetric layout.</summary>
         static SpawnPoint RandomPoint(SpellShape shape, Mulberry32 rng, bool rightHalfOnly)
         {
@@ -128,8 +133,9 @@ namespace MagicCircleSim.Compiler
         /// <summary>A12: mirrored pairs across the forward axis, plus one on the axis when odd.</summary>
         static SpawnPoint[] SymmetricPoints(SpellShape shape, Mulberry32 rng)
         {
-            var points = new List<SpawnPoint>(shape.Count);
-            if (shape.Count % 2 == 1)
+            var count = shape.Count.Value;
+            var points = new List<SpawnPoint>(count);
+            if (count % 2 == 1)
             {
                 var onAxis = shape.Form == FormValue.Ring ? Polar(shape.Radius, 0) : new SpawnPoint(0, 0);
                 if (shape.Form == FormValue.Disk || shape.Form == FormValue.Square)
@@ -138,7 +144,7 @@ namespace MagicCircleSim.Compiler
                 }
                 points.Add(onAxis);
             }
-            for (var i = 0; i < shape.Count / 2; i++)
+            for (var i = 0; i < count / 2; i++)
             {
                 var p = RandomPoint(shape, rng, true);
                 points.Add(p);

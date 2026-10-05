@@ -1,6 +1,11 @@
-// The Unity port casts exactly what the web simulator casts. Expected values
-// were printed by the web build's own compileSpell, spawnLayout and Performance.
-// If the web build's rules change on purpose, regenerate these numbers.
+// The Unity port lays a circle out exactly as the web simulator does. Expected
+// values were printed by the web build's own compileSpell, spawnLayout and
+// Performance. If the web build's rules change on purpose, regenerate these numbers.
+//
+// Parity stops at the instances: the port's particles follow per-element
+// physics the web build does not have (Looks.cs), and an empty slot stays empty
+// here where the web build fills it from defaults (A09), so the empty circle's
+// seed and the particle state are no longer pinned.
 
 using MagicCircleSim.Cast;
 using MagicCircleSim.Circle;
@@ -19,14 +24,13 @@ namespace MagicCircleSim.Tests
         public void SeedsMatchTheWebBuild()
         {
             Assert.AreEqual(3402558243u, SpellCompiler.Compile(LoiTran).Seed);
-            Assert.AreEqual(1478955262u, SpellCompiler.Compile(MagicCircle.Empty).Seed);
         }
 
         [Test]
         public void RandomLayoutMatchesTheWebBuild()
         {
             var spell = SpellCompiler.Compile(LoiTran);
-            var points = SpawnLayout.Compute(spell.Shape, spell.Motion.Distribution, spell.Seed);
+            var points = SpawnLayout.Compute(spell.Shape.Value, spell.Motion.Distribution, spell.Seed);
             Assert.AreEqual(2.6057082094073825, points[0].X, 1e-12);
             Assert.AreEqual(0.1187294751972225, points[0].Z, 1e-12);
             Assert.AreEqual(1.9235420598512636, points[6].X, 1e-12);
@@ -47,15 +51,12 @@ namespace MagicCircleSim.Tests
         }
 
         [Test]
-        public void APerformanceMatchesTheWebBuildStepForStep()
+        public void InstancesFlyAsTheyDoInTheWebBuild()
         {
             var perf = new SpellPerformance(SpellCompiler.Compile(LoiTran));
             perf.AdvanceTo(1.5);
-            Assert.AreEqual(166, perf.Pool.Alive);
             Assert.AreEqual(-1.2327218307844998, perf.Instances[0].X, 1e-9);
             Assert.AreEqual(-2.2987407093365153, perf.Instances[0].Z, 1e-9);
-            Assert.AreEqual(0.8113174106925726, perf.Instances[0].Alpha, 1e-12);
-            Assert.AreEqual(1.382791519165039f, perf.Pool.Positions[0], 1e-5f);
         }
     }
 }

@@ -1,6 +1,7 @@
 // The cast clock. Every cast runs four beats: the circle charges, the
 // instances manifest, they fly for the spell's lifetime, then they fade. Only
-// the flight beat stretches with Vòng 4's lifetime (A02).
+// the flight beat stretches with Vòng 4's lifetime (A02). A spell with no
+// lifetime rune passes infinity, so its flight beat lasts until it is released (A20).
 
 using System;
 

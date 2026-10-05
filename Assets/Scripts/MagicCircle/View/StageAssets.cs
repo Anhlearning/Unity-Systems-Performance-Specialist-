@@ -1,9 +1,11 @@
 // The shared GPU resources every cast draws with: one material per blend mode,
-// the soft glow texture, and the color parsing the look table needs. Colors per
-// instance go through MaterialPropertyBlocks, so no material is ever cloned.
+// the soft glow texture, each material's particle sprite atlas, and the color
+// parsing the look table needs. Colors per instance go through
+// MaterialPropertyBlocks, so no material is ever cloned.
 
 using System;
 using System.Collections.Generic;
+using MagicCircleSim.Design;
 using UnityEngine;
 using UnityEngine.Rendering;
 using Object = UnityEngine.Object;
@@ -18,15 +20,24 @@ namespace MagicCircleSim.View
         static readonly int DstBlendId = Shader.PropertyToID("_DstBlend");
 
         const int GlowTexturePx = 128;
+        /// <summary>Resources folder of the atlases Art~/generate_particles.py draws, one per material key.</summary>
+        const string SpriteFolder = "MagicCircleParticles/";
+        /// <summary>Resources folder of the stroke textures bodies are painted with.</summary>
+        const string BodyFolder = "MagicCircleBodies/";
 
         public readonly Material Additive;
         public readonly Material AlphaBlend;
         /// <summary>Alpha blend in the opaque queue, so the floor always draws before the additive circle.</summary>
         public readonly Material Floor;
         public readonly Material Glow;
+        /// <summary>Particles that add light: fire, lightning, wind.</summary>
         public readonly Material Particles;
+        /// <summary>Particles that are matter and cover what is behind them: stone, leaves, water.</summary>
+        public readonly Material ParticlesAlpha;
         public readonly Texture2D GlowTexture;
         readonly List<Object> owned = new List<Object>();
+        readonly Dictionary<MaterialId, Texture> sprites = new Dictionary<MaterialId, Texture>();
+        readonly Dictionary<string, Texture> bodyTextures = new Dictionary<string, Texture>();
 
         public StageAssets(Shader unlit, Shader particles)
         {
@@ -40,6 +51,11 @@ namespace MagicCircleSim.View
             Glow = Unlit(unlit, BlendMode.SrcAlpha, BlendMode.One, "MagicCircle Glow");
             Glow.SetTexture(MainTexId, GlowTexture);
             Particles = Own(new Material(particles) { name = "MagicCircle Particles" });
+            Particles.SetFloat(SrcBlendId, (float)BlendMode.SrcAlpha);
+            Particles.SetFloat(DstBlendId, (float)BlendMode.One);
+            ParticlesAlpha = Own(new Material(particles) { name = "MagicCircle Particles Alpha" });
+            ParticlesAlpha.SetFloat(SrcBlendId, (float)BlendMode.SrcAlpha);
+            ParticlesAlpha.SetFloat(DstBlendId, (float)BlendMode.OneMinusSrcAlpha);
         }
 
         Material Unlit(Shader shader, BlendMode src, BlendMode dst, string name)
@@ -48,6 +64,28 @@ namespace MagicCircleSim.View
             material.SetFloat(SrcBlendId, (float)src);
             material.SetFloat(DstBlendId, (float)dst);
             return material;
+        }
+
+        /// <summary>The material's sprite atlas, or the soft glow dot when its art is missing.</summary>
+        public Texture ParticleSprite(MaterialId material)
+        {
+            if (sprites.TryGetValue(material, out var sprite)) return sprite;
+            var loaded = Resources.Load<Texture2D>(SpriteFolder + Materials.Get(material).Key);
+            if (loaded == null) Debug.LogWarning($"No particle sprite for {material}; drawing the glow dot. Run Art~/generate_particles.py.");
+            sprite = loaded != null ? loaded : (Texture)GlowTexture;
+            sprites[material] = sprite;
+            return sprite;
+        }
+
+        /// <summary>A body's stroke texture by name, or plain white when its art is missing.</summary>
+        public Texture BodyTexture(string name)
+        {
+            if (bodyTextures.TryGetValue(name, out var texture)) return texture;
+            var loaded = Resources.Load<Texture2D>(BodyFolder + name);
+            if (loaded == null) Debug.LogWarning($"No body stroke texture '{name}'; drawing flat strokes. Run Art~/generate_particles.py.");
+            texture = loaded != null ? loaded : (Texture)Texture2D.whiteTexture;
+            bodyTextures[name] = texture;
+            return texture;
         }
 
         public Material Own(Material material)
