@@ -77,9 +77,7 @@
     },
     "styles": [],
     // `images` supports online and local images, as well as folders.
-    "images": [
-      "C:\\Users\\ADMIN\\Documents\\BG\\sasuke-uchiha-neon-3840x2160-22582.png"
-    ],
+    "images": ["C:\\Users\\ADMIN\\Documents\\BG\\1294983.png"],
     "interval": 0,
     "random": false
   }

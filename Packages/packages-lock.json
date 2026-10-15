@@ -17,6 +17,13 @@
       },
       "hash": "4ce7dd3cc54e37e2ed6dc59cb5a047f3dccb3f50"
     },
+    "com.scellecs.morpeh": {
+      "version": "https://github.com/scellecs/morpeh.git?path=Scellecs.Morpeh#2024.1.1",
+      "depth": 0,
+      "source": "git",
+      "dependencies": {},
+      "hash": "9f6369384792a01d74df24efd35b08ae313e4f12"
+    },
     "com.unity.ai.navigation": {
       "version": "2.0.14",
       "depth": 0,
@@ -167,6 +174,19 @@
       "depth": 1,
       "source": "registry",
       "dependencies": {},
+      "url": "https://packages.unity.com"
+    },
+    "com.unity.memoryprofiler": {
+      "version": "1.1.12",
+      "depth": 0,
+      "source": "registry",
+      "dependencies": {
+        "com.unity.burst": "1.8.0",
+        "com.unity.collections": "1.2.3",
+        "com.unity.mathematics": "1.2.1",
+        "com.unity.profiling.core": "1.0.0",
+        "com.unity.editorcoroutines": "1.0.0"
+      },
       "url": "https://packages.unity.com"
     },
     "com.unity.multiplayer.center": {
