@@ -1,0 +1,20 @@
+{
+    "name": "Ignite.Unity",
+    "rootNamespace": "Ignite.Unity",
+    "references": [
+        "Ignite.Core",
+        "VContainer",
+        "UniTask",
+        "Unity.InputSystem",
+        "UnityEngine.UI"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

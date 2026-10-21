@@ -1,0 +1,8 @@
+{
+  "name": "com.ignite.core",
+  "version": "0.1.0",
+  "displayName": "Ignite Core",
+  "description": "Pure C# core of the Ignite indie framework. No UnityEngine references.",
+  "unity": "6000.0",
+  "author": { "name": "Ignite" }
+}

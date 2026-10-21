@@ -1,0 +1,21 @@
+{
+    "name": "Ignite.Sample.Editor",
+    "rootNamespace": "IgniteSample.Editor",
+    "references": [
+        "Ignite.Core",
+        "Ignite.Unity",
+        "Ignite.Sample",
+        "VContainer"
+    ],
+    "includePlatforms": [
+        "Editor"
+    ],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

@@ -1,0 +1,13 @@
+{
+  "name": "com.ignite.unity",
+  "version": "0.1.0",
+  "displayName": "Ignite Unity",
+  "description": "Unity layer of the Ignite indie framework: bootstrap, services, game flow, scene groups, pooling. VContainer and UniTask must be installed via git URL in the game's manifest.",
+  "unity": "6000.0",
+  "author": { "name": "Ignite" },
+  "dependencies": {
+    "com.ignite.core": "0.1.0",
+    "com.unity.inputsystem": "1.20.0",
+    "com.unity.ugui": "2.0.0"
+  }
+}

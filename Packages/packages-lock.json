@@ -17,6 +17,57 @@
       },
       "hash": "4ce7dd3cc54e37e2ed6dc59cb5a047f3dccb3f50"
     },
+    "com.cysharp.unitask": {
+      "version": "https://github.com/Cysharp/UniTask.git?path=src/UniTask/Assets/Plugins/UniTask",
+      "depth": 0,
+      "source": "git",
+      "dependencies": {},
+      "hash": "a77a1b4a89824fb6df293099de3060daf2a432c1"
+    },
+    "com.eflatun.scenereference": {
+      "version": "git+https://github.com/starikcetin/Eflatun.SceneReference.git#5.0.0",
+      "depth": 0,
+      "source": "git",
+      "dependencies": {
+        "com.unity.settings-manager": "2.0.1",
+        "com.unity.nuget.newtonsoft-json": "3.0.2"
+      },
+      "hash": "6821c571090fc0828accced5dbd7635152c23887"
+    },
+    "com.ignite.core": {
+      "version": "file:com.ignite.core",
+      "depth": 0,
+      "source": "embedded",
+      "dependencies": {}
+    },
+    "com.ignite.ecs": {
+      "version": "file:com.ignite.ecs",
+      "depth": 0,
+      "source": "embedded",
+      "dependencies": {
+        "com.ignite.core": "0.1.0",
+        "com.ignite.unity": "0.1.0"
+      }
+    },
+    "com.ignite.steam": {
+      "version": "file:com.ignite.steam",
+      "depth": 0,
+      "source": "embedded",
+      "dependencies": {
+        "com.ignite.core": "0.1.0",
+        "com.ignite.unity": "0.1.0"
+      }
+    },
+    "com.ignite.unity": {
+      "version": "file:com.ignite.unity",
+      "depth": 0,
+      "source": "embedded",
+      "dependencies": {
+        "com.ignite.core": "0.1.0",
+        "com.unity.inputsystem": "1.20.0",
+        "com.unity.ugui": "2.0.0"
+      }
+    },
     "com.scellecs.morpeh": {
       "version": "https://github.com/scellecs/morpeh.git?path=Scellecs.Morpeh#2024.1.1",
       "depth": 0,
@@ -376,6 +427,13 @@
         "com.unity.modules.ui": "1.0.0",
         "com.unity.modules.imgui": "1.0.0"
       }
+    },
+    "jp.hadashikick.vcontainer": {
+      "version": "https://github.com/hadashiA/VContainer.git?path=VContainer/Assets/VContainer#1.17.0",
+      "depth": 0,
+      "source": "git",
+      "dependencies": {},
+      "hash": "177dbda557fd652ce7f5d1647a3621653e094373"
     },
     "com.unity.modules.accessibility": {
       "version": "1.0.0",

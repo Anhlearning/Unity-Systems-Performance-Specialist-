@@ -1,0 +1,36 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 30c9136fe33ddd445930992fcbcc9bce, type: 3}
+  m_Name: SampleGameFlow
+  m_EditorClassIdentifier: Ignite.Unity::Ignite.Unity.Flow.GameFlowAsset
+  initialState: Menu
+  states:
+  - id: Menu
+    sceneGroup: {fileID: 11400000, guid: b96bc84419c64814b8d2182f5fd141af, type: 2}
+    canGoTo:
+    - Gameplay
+  - id: Gameplay
+    sceneGroup: {fileID: 11400000, guid: d16eb952e47fe1e43a952639571f6695, type: 2}
+    canGoTo:
+    - Pause
+    - Results
+    - Menu
+  - id: Pause
+    sceneGroup: {fileID: 0}
+    canGoTo:
+    - Gameplay
+    - Menu
+  - id: Results
+    sceneGroup: {fileID: 0}
+    canGoTo:
+    - Gameplay
+    - Menu

@@ -1,0 +1,27 @@
+{
+    "name": "Ignite.Unity.Tests",
+    "rootNamespace": "Ignite.Unity.Tests",
+    "references": [
+        "Ignite.Core",
+        "Ignite.Unity",
+        "VContainer",
+        "UniTask",
+        "UnityEngine.TestRunner",
+        "UnityEditor.TestRunner"
+    ],
+    "includePlatforms": [
+        "Editor"
+    ],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": true,
+    "precompiledReferences": [
+        "nunit.framework.dll"
+    ],
+    "autoReferenced": false,
+    "defineConstraints": [
+        "UNITY_INCLUDE_TESTS"
+    ],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

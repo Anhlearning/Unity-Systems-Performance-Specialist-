@@ -1,0 +1,19 @@
+{
+    "name": "Ignite.Unity.Editor",
+    "rootNamespace": "Ignite.Unity.Editor",
+    "references": [
+        "Ignite.Core",
+        "Ignite.Unity"
+    ],
+    "includePlatforms": [
+        "Editor"
+    ],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

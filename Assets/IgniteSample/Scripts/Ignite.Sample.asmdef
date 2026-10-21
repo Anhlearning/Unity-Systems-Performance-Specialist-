@@ -1,0 +1,21 @@
+{
+    "name": "Ignite.Sample",
+    "rootNamespace": "IgniteSample",
+    "references": [
+        "Ignite.Core",
+        "Ignite.Unity",
+        "VContainer",
+        "UniTask",
+        "Unity.InputSystem",
+        "UnityEngine.UI"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}
