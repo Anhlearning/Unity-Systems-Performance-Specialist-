@@ -1,0 +1,19 @@
+{
+    "name": "Ignite.Sample.Gameplay",
+    "rootNamespace": "IgniteSample.Gameplay",
+    "references": [
+        "Ignite.Core",
+        "Ignite.Ecs",
+        "Scellecs.Morpeh",
+        "VContainer"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": true
+}

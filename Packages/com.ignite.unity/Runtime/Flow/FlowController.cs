@@ -29,6 +29,7 @@ namespace Ignite.Unity.Flow
 
         public bool HasFlow => _flow != null;
         public string InitialState => _asset != null ? _asset.InitialState : null;
+        public string PauseState => _asset != null ? _asset.PauseState : null;
         public string Current => _flow?.Current;
         public bool IsBusy { get; private set; }
 

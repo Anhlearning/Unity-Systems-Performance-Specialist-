@@ -30,6 +30,10 @@ EditorBuildSettings:
     path: Assets/FPS/Scenes/MainScene.unity
     guid: d794a2ef8ba31d847ad3c19d03e2ddb9
   m_configObjects:
+    com.unity.addressableassets: {fileID: 11400000, guid: 2a061b15556c1704bbfa23b5ac087c76,
+      type: 2}
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 05b4aeda8533b704f9be24b556a43d98,
       type: 3}
+    com.unity.localization.settings: {fileID: 11400000, guid: 4fd8b7e09d75db3439c783824ec63ecb,
+      type: 2}
   m_UseUCBPForAssetBundles: 0

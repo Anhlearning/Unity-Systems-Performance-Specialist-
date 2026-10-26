@@ -1,6 +1,7 @@
 # com.ignite.unity
 
-Tầng Unity: Boot, Services (VContainer), Game Flow + Scene Group, Pool GameObject, màn loading.
+Tầng Unity: Boot, Services (VContainer), Game Flow + Scene Group, Pool GameObject, màn loading,
+Input, UI Stack, Assets (Addressables), Audio, Settings, Save, Localization, Debug, nền tảng (Null mặc định).
 
 Game phải tự cài trong `Packages/manifest.json` (package git không tự kéo dependency git):
 
@@ -55,7 +56,26 @@ pools.Despawn(bullet);      // hoặc bullet.SetActive(false): tự trả về p
 
 Component trên prefab cài `IPoolable` nhận `OnSpawn/OnDespawn`. Sau `Prewarm`, Spawn/Despawn không sinh rác (có test 1000 lần).
 
+## Người chơi (Giai đoạn 3)
+
+| Module | Dùng | Ghi chú |
+|---|---|---|
+| Input | `InputService.PushLayer("Player")` → Dispose để tắt | Mỗi action map là một layer; nhiều bên cùng bật thì map tắt khi bên cuối tắt. Làm trên bản sao asset |
+| Đổi phím | `InputRebinder.Start("Player/Jump", index)` | Lưu vào Settings, khởi động lại vẫn còn |
+| Icon gợi ý | `InputService.DisplayFor/IconFor(action)` | Theo `DeviceTracker.Current` (bàn phím, gamepad, Steam Deck) |
+| UI Stack | `UIStackService.Push(screen)`, `Back()` | Màn `UIScreen`: chọn sẵn `firstSelected`, nhớ focus khi quay lại. Back = `UI/Cancel`; ở màn gốc phát `BackAtRoot` |
+| Assets | `await assets.LoadAsync<T>(key)` / `Release<T>(key)` | Addressables, đếm tham chiếu; thay cho `Resources.Load` |
+| Audio | `audio.Play("sfx.hit")`, `PlayMusic`, `SetBusVolume` | `AudioLibrary` theo id, pool AudioSource, 4 bus; `AudioMixer` tuỳ chọn |
+| Settings | `settings.Change(s => s.MasterVolume = 0.5f)` | File riêng, áp dụng âm lượng / phím / màn hình / ngôn ngữ |
+| Save | `ISaveParticipant` + `save.Register(this)`, `Save/Load(slot)` | JSON có version, migration, ghi atomic; module ECS lưu qua `ISaveableModule` |
+| Localization | `localization.Get("menu.play")`, `LocalizedText` | Bọc Unity Localization (tuỳ chọn); chỉ chạy khi Play, không chặn main thread |
+| Debug | Phím `` ` `` mở console, F3 overlay FPS/GC | Chỉ Editor và Development Build. Thêm lệnh: `DebugCommands.Register` |
+| Nền tảng | `IAchievements`, `IStats`, `IPlatformOverlay`, `IPlatformInfo` | Mặc định `NullPlatform`; Steam qua `com.ignite.steam`. Mở overlay → Pause |
+
+GameInstaller override thêm `ConfigureSave(options)` (version, migration, nơi lưu) và `ConfigurePlatform(builder)`.
+
 ## Menu
 
 - **Tools/Ignite/Play From Boot**: bật/tắt việc Play luôn đi qua Boot.
 - **Tools/GameLog**: bật/tắt kênh log.
+- **Tools/Ignite/Rebuild Sample**, **Tools/Ignite/Rebuild Sample Localization**: dựng lại sample.

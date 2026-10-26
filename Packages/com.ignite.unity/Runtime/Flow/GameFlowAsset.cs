@@ -25,8 +25,11 @@ namespace Ignite.Unity.Flow
         [Tooltip("State đầu tiên sau Boot khi chạy bản build hoặc bấm Play từ scene Boot.")]
         [SerializeField] string initialState;
         [SerializeField] List<State> states = new List<State>();
+        [Tooltip("State dùng khi phải tự Pause (mở overlay Steam…). Để trống nếu game không có Pause.")]
+        [SerializeField] string pauseState = "Pause";
 
         public string InitialState => initialState;
+        public string PauseState => pauseState;
         public IReadOnlyList<State> States => states;
 
         public State Find(string id)
@@ -64,6 +67,7 @@ namespace Ignite.Unity.Flow
         public void ApplyTemplate(SceneGroupAsset menuGroup, SceneGroupAsset gameplayGroup)
         {
             initialState = "Menu";
+            pauseState = "Pause";
             states = new List<State>
             {
                 new State { id = "Menu", sceneGroup = menuGroup, canGoTo = new List<string> { "Gameplay" } },

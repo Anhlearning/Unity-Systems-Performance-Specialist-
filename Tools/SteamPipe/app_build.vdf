@@ -1,0 +1,18 @@
+"AppBuild"
+{
+	// Thay <APP_ID> bằng App ID thật của game (không dùng 480: Spacewar không upload được).
+	"AppID" "<APP_ID>"
+	"Desc" "Ignite playtest"
+
+	// Nhánh beta phải được tạo trước trên Steamworks (App Admin → SteamPipe → Builds → Branches).
+	// SetLive không đẩy thẳng lên nhánh mặc định "default": việc đó làm tay trên trang Steamworks.
+	"SetLive" "beta"
+
+	"ContentRoot" "..\..\Builds\Steam\"
+	"BuildOutput" ".\output\"
+
+	"Depots"
+	{
+		"<DEPOT_ID>" "depot_build.vdf"
+	}
+}

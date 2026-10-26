@@ -1,0 +1,19 @@
+"DepotBuild"
+{
+	// Thay <DEPOT_ID> bằng Depot ID Windows của game (thường là App ID + 1).
+	"DepotID" "<DEPOT_ID>"
+	"ContentRoot" "..\..\Builds\Steam\"
+
+	"FileMapping"
+	{
+		"LocalPath" "*"
+		"DepotPath" "."
+		"Recursive" "1"
+	}
+
+	// Không đưa file debug và file chỉ dùng khi chạy ngoài Steam lên Steam.
+	"FileExclusion" "*.pdb"
+	"FileExclusion" "*_BurstDebugInformation_DoNotShip*"
+	"FileExclusion" "*_BackUpThisFolder_ButDontShipItWithYourGame*"
+	"FileExclusion" "steam_appid.txt"
+}

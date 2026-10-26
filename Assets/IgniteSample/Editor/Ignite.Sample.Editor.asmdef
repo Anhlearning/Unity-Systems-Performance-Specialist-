@@ -5,7 +5,12 @@
         "Ignite.Core",
         "Ignite.Unity",
         "Ignite.Sample",
-        "VContainer"
+        "Ignite.Ecs",
+        "Ignite.Sample.Gameplay.View",
+        "VContainer",
+        "Unity.InputSystem",
+        "Unity.Localization",
+        "Unity.Localization.Editor"
     ],
     "includePlatforms": [
         "Editor"

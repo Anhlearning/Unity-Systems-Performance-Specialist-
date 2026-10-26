@@ -6,7 +6,10 @@
         "VContainer",
         "UniTask",
         "Unity.InputSystem",
-        "UnityEngine.UI"
+        "UnityEngine.UI",
+        "Unity.Addressables",
+        "Unity.ResourceManager",
+        "Unity.Localization"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],
@@ -15,6 +18,12 @@
     "precompiledReferences": [],
     "autoReferenced": true,
     "defineConstraints": [],
-    "versionDefines": [],
+    "versionDefines": [
+        {
+            "name": "com.unity.localization",
+            "expression": "",
+            "define": "IGNITE_LOCALIZATION"
+        }
+    ],
     "noEngineReferences": false
 }
