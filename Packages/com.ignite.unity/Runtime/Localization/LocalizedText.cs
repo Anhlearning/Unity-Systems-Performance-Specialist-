@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.UI;
+using VContainer;
 
 namespace Ignite.Unity.Localization
 {
@@ -15,6 +16,14 @@ namespace Ignite.Unity.Localization
         object[] _arguments = System.Array.Empty<object>();
 
         public string Key => key;
+
+        /// <summary>Text đặt sẵn trong scene: tự Bind theo key trong Inspector khi scope inject. Đã Bind từ code thì giữ nguyên.</summary>
+        [Inject]
+        void Construct(LocalizationService localization)
+        {
+            if (_localization == null && !string.IsNullOrEmpty(key))
+                Bind(localization, key, _arguments);
+        }
 
         public void Bind(LocalizationService localization, string entryKey, params object[] arguments)
         {
