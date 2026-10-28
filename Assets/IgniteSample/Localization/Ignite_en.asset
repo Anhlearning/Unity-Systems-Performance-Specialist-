@@ -1,0 +1,115 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e9620f8c34305754d8cc9a7e49e852d9, type: 3}
+  m_Name: Ignite_en
+  m_EditorClassIdentifier: Unity.Localization::UnityEngine.Localization.Tables.StringTable
+  m_LocaleId:
+    m_Code: en
+  m_SharedData: {fileID: 11400000, guid: 89967297ebb1f5f4dbecbf3c49533d15, type: 2}
+  m_Metadata:
+    m_Items: []
+  m_TableData:
+  - m_Id: 1947955200
+    m_Localized: "IGNITE SAMPLE \xB7 MAIN MENU"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2006675456
+    m_Localized: Play
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2006675457
+    m_Localized: Settings
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2006675458
+    m_Localized: 'Runs played: {0}'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2010869760
+    m_Localized: "GAMEPLAY \xB7 Esc / B button to pause"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2010869761
+    m_Localized: PAUSED
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2010869762
+    m_Localized: Resume
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2010869763
+    m_Localized: Main menu
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2010869764
+    m_Localized: SETTINGS
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2010869765
+    m_Localized: Master volume
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2010869766
+    m_Localized: Music
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2010869767
+    m_Localized: Effects
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2010869768
+    m_Localized: Interface
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2010869769
+    m_Localized: Display mode
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2010869770
+    m_Localized: Resolution
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2010869771
+    m_Localized: native
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2010869772
+    m_Localized: on
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2010869773
+    m_Localized: off
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2010869774
+    m_Localized: Quality
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2010869775
+    m_Localized: Language
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2010869776
+    m_Localized: Rebind Jump
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2010869777
+    m_Localized: "Press a new key\u2026 (Esc to cancel)"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2010869778
+    m_Localized: Back
+    m_Metadata:
+      m_Items: []
+  references:
+    version: 2
+    RefIds: []

@@ -5,7 +5,9 @@
         "Ignite.Core",
         "Ignite.Unity",
         "UnityEngine.TestRunner",
-        "UnityEditor.TestRunner"
+        "UnityEditor.TestRunner",
+        "UnityEngine.UI",
+        "VContainer"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],

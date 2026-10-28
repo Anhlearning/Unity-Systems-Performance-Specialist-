@@ -4,5 +4,8 @@
   "displayName": "Ignite Core",
   "description": "Pure C# core of the Ignite indie framework. No UnityEngine references.",
   "unity": "6000.0",
-  "author": { "name": "Ignite" }
+  "author": { "name": "Ignite" },
+  "dependencies": {
+    "com.unity.nuget.newtonsoft-json": "3.2.2"
+  }
 }

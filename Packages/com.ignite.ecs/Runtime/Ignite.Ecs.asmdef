@@ -4,7 +4,8 @@
     "references": [
         "Ignite.Core",
         "Ignite.Unity",
-        "Scellecs.Morpeh"
+        "Scellecs.Morpeh",
+        "VContainer"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],

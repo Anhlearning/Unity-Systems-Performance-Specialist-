@@ -34,3 +34,4 @@ MonoBehaviour:
     canGoTo:
     - Gameplay
     - Menu
+  pauseState: Pause

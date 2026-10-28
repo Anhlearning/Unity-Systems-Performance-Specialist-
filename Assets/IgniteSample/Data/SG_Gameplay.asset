@@ -17,4 +17,4 @@ MonoBehaviour:
     role: 0
   - path: Assets/IgniteSample/Scenes/Sample_SharedUI.unity
     role: 1
-  installer: {fileID: 0}
+  installer: {fileID: 11400000, guid: 83dfed0b6e5230c4ba50464cc0ea1a55, type: 2}
