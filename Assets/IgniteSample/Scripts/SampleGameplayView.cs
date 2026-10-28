@@ -49,7 +49,6 @@ namespace IgniteSample
             var keyboard = Keyboard.current;
             if (_flow == null || keyboard == null || !keyboard.escapeKey.wasPressedThisFrame)
                 return;
-
             if (_flow.Current == "Gameplay")
                 _flow.GoAsync("Pause").Forget();
             else if (_flow.Current == "Pause")

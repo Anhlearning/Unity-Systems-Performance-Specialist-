@@ -1,20 +1,15 @@
 ﻿<Solution>
   <Project Path="fps.Game.csproj" />
   <Project Path="fps.UI.csproj" />
-  <Project Path="MagicCircleSim.Core.csproj" />
-  <Project Path="MagicCircleSim.View.csproj" />
-  <Project Path="MagicCircleSim.Preview.csproj" />
   <Project Path="Ignite.Core.csproj" />
   <Project Path="Ignite.Core.Tests.csproj" />
   <Project Path="Ignite.Steam.csproj" />
   <Project Path="Ignite.Unity.csproj" />
   <Project Path="Ignite.Unity.Editor.csproj" />
   <Project Path="fps.Gameplay.csproj" />
-  <Project Path="MagicCircleSim.Editor.csproj" />
   <Project Path="NavMeshComponentsEditor.csproj" />
   <Project Path="Assembly-CSharp.csproj" />
   <Project Path="Ignite.Ecs.csproj" />
-  <Project Path="MagicCircleSim.Tests.csproj" />
   <Project Path="Ignite.Sample.csproj" />
   <Project Path="Ignite.Unity.Tests.csproj" />
   <Project Path="fps.Editor.csproj" />
