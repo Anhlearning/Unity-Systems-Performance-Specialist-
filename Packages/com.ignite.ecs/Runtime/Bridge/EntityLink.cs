@@ -10,7 +10,11 @@ namespace Ignite.Ecs
         EntityViewRegistry _registry;
 
         public Entity Entity { get; private set; }
-        public bool IsLinked => _registry != null;
+
+        /// <summary>Đang đại diện một entity còn sống. Entity bị huỷ trong World là false ngay, view không được gửi command cho nó nữa.</summary>
+        public bool IsLinked => _registry != null && _registry.IsAlive(Entity);
+
+        internal EntityViewRegistry Registry => _registry;
 
         internal void Bind(Entity entity, EntityViewRegistry registry)
         {

@@ -18,7 +18,8 @@ namespace Ignite.Ecs
         [Inject]
         void InjectPresenter(EventQueue<TEvent> events, EcsWorldHost host, EntityViewRegistry views)
         {
-            _reader = events.Claim(GetType().Name);
+            // Có owner = this: hai object cùng loại presenter trong scene sẽ báo lỗi thay vì âm thầm chia nhau event.
+            _reader = events.Claim(GetType().Name, this);
             Host = host;
             Views = views;
             OnInjected();

@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using Ignite.Core.Logging;
 using NUnit.Framework;
 using Scellecs.Morpeh;
 using UnityEngine;
@@ -177,6 +178,158 @@ namespace Ignite.Ecs.Tests
             {
                 Object.DestroyImmediate(go);
                 host.Dispose();
+            }
+        }
+
+        static (EcsWorldHost host, EntityViewRegistry registry) CreateHostWithRegistry()
+        {
+            var builder = new ContainerBuilder();
+            builder.Register<EntityViewRegistry>(Lifetime.Singleton);
+            var resolver = builder.Build();
+            var host = new EcsWorldHost(Array.Empty<IGameModule>(), resolver);
+            return (host, resolver.Resolve<EntityViewRegistry>());
+        }
+
+        [Test]
+        public void Registry_EntityRemovedInWorld_StopsLinkImmediately_ButViewStaysFindable()
+        {
+            var (host, registry) = CreateHostWithRegistry();
+            var go = new GameObject("View");
+            try
+            {
+                var entity = host.World.CreateEntity();
+                var link = go.AddComponent<EntityLink>();
+                registry.Link(entity, link);
+
+                host.World.RemoveEntity(entity);
+
+                Assert.That(link.IsLinked, Is.False, "View không được gửi command cho entity đã chết, kể cả trong cùng frame.");
+                Assert.That(registry.IsAlive(entity), Is.False);
+                // Presenter nhận event "chết" vẫn tra được view để chạy hiệu ứng.
+                Assert.That(registry.TryGetView(entity, out var found), Is.True);
+                Assert.That(found, Is.SameAs(link));
+            }
+            finally
+            {
+                Object.DestroyImmediate(go);
+                host.Dispose();
+            }
+        }
+
+        [Test]
+        public void Registry_PooledViewRelinked_OldEntityNoLongerMapsToIt()
+        {
+            var (host, registry) = CreateHostWithRegistry();
+            var go = new GameObject("PooledView");
+            try
+            {
+                var link = go.AddComponent<EntityLink>();
+                var first = host.World.CreateEntity();
+                var second = host.World.CreateEntity();
+
+                registry.Link(first, link);
+                registry.Link(second, link);
+
+                Assert.That(registry.TryGetView(first, out _), Is.False);
+                Assert.That(registry.TryGetView(second, out var found), Is.True);
+                Assert.That(found, Is.SameAs(link));
+                Assert.That(registry.Count, Is.EqualTo(1));
+            }
+            finally
+            {
+                Object.DestroyImmediate(go);
+                host.Dispose();
+            }
+        }
+
+        [Test]
+        public void Registry_HostDisposed_UnbindsViews()
+        {
+            var (host, registry) = CreateHostWithRegistry();
+            var go = new GameObject("KeptSceneView");
+            try
+            {
+                var link = go.AddComponent<EntityLink>();
+                registry.Link(host.World.CreateEntity(), link);
+
+                host.Dispose();
+
+                Assert.That(link.IsLinked, Is.False, "View ở scene được giữ lại không được trỏ vào World đã huỷ.");
+                Assert.That(registry.Count, Is.EqualTo(0));
+            }
+            finally
+            {
+                Object.DestroyImmediate(go);
+            }
+        }
+
+        [Test]
+        public void Claim_TwoOwnersSameName_Throws()
+        {
+            var queue = new EventQueue<Tick>();
+            var a = new GameObject("PresenterA");
+            var b = new GameObject("PresenterB");
+            try
+            {
+                queue.Claim("HudPresenter", a);
+                Assert.DoesNotThrow(() => queue.Claim("HudPresenter", a), "Cùng owner inject lại là hợp lệ.");
+                Assert.Throws<InvalidOperationException>(() => queue.Claim("HudPresenter", b));
+            }
+            finally
+            {
+                Object.DestroyImmediate(a);
+                Object.DestroyImmediate(b);
+            }
+        }
+
+        [Test]
+        public void Claim_PreviousOwnerDestroyed_NewOwnerTakesOver()
+        {
+            var queue = new EventQueue<Tick>();
+            var old = new GameObject("OldPresenter");
+            var replacement = new GameObject("NewPresenter");
+            try
+            {
+                queue.Claim("HudPresenter", old);
+                Object.DestroyImmediate(old);
+
+                Assert.DoesNotThrow(() => queue.Claim("HudPresenter", replacement));
+            }
+            finally
+            {
+                Object.DestroyImmediate(replacement);
+            }
+        }
+
+        sealed class RecordingSink : ILogSink
+        {
+            public readonly List<string> Warnings = new List<string>();
+
+            public void Write(LogLevel level, LogChannel channel, string message)
+            {
+                if (level == LogLevel.Warning)
+                    Warnings.Add(message);
+            }
+        }
+
+        [Test]
+        public void Queue_WithoutConsumer_WarnsOnceWhenBacklogGrows()
+        {
+            var previous = GameLog.Sink;
+            var sink = new RecordingSink();
+            GameLog.Sink = sink;
+            try
+            {
+                var queue = new EventQueue<Tick>();
+                for (int i = 0; i < BridgeQueue<Tick>.WarnCount * 2; i++)
+                    queue.Publish(new Tick());
+
+                Assert.That(sink.Warnings, Has.Count.EqualTo(1));
+                StringAssert.Contains("chưa có consumer", sink.Warnings[0]);
+            }
+            finally
+            {
+                GameLog.Sink = previous;
             }
         }
 

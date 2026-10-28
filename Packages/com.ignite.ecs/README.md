@@ -36,9 +36,9 @@ public sealed class FightModule : IGameModule
 | Mono → ECS | `CommandQueue<T>.Enqueue` | Chỉ chở ý định, không ghi thẳng component |
 | ECS → Mono | `EventQueue<T>.Publish` | Event tự đủ data; presenter đọc trong LateUpdate |
 | State liên tục | Đọc component qua `Host.World` | Thanh máu, độ vướng dây… chỉ đọc |
-| Entity ↔ View | `EntityViewRegistry.Link(entity, link)` | `EntityLink` bị Destroy thì tự gỡ |
+| Entity ↔ View | `EntityViewRegistry.Link(entity, link)` | `EntityLink` bị Destroy thì tự gỡ; entity bị huỷ thì `IsLinked` là false ngay (hỏi World lúc dùng, không quét mỗi frame), `TryGetView` vẫn trả view để chạy hiệu ứng chết |
 
-Mỗi queue **chỉ 1 consumer** (`Claim(tên)`); consumer thứ hai bị báo lỗi ngay.
+Mỗi queue **chỉ 1 consumer** (`Claim(tên, owner)`; presenter truyền chính nó làm owner nên hai instance cùng loại bị chặn, presenter bị huỷ thì instance mới được nhận lại); consumer thứ hai bị báo lỗi ngay. Queue giữ quá `WarnCount` (1024) message chưa đọc thì log cảnh báo một lần: thường là presenter chưa đặt vào scene hoặc đang bị tắt.
 
 ## Presenter
 

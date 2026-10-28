@@ -20,12 +20,16 @@ namespace Ignite.Ecs
 
         readonly List<string> _systemOrder = new List<string>();
         readonly List<IDisposable> _saveRegistrations = new List<IDisposable>();
+        readonly EntityViewRegistry _views;
 
         public EcsWorldHost(IReadOnlyList<IGameModule> modules, IObjectResolver resolver)
         {
+            resolver.TryResolve(out _views);
+
             // Tạo ngay trong constructor (lúc scope build), để presenter được inject ngay sau đó đã thấy World.
             World = World.Create();
             World.UpdateByUnity = false; // framework tự gọi update, Morpeh không được gọi thêm lần nữa
+            _views?.Attach(World);
 
             for (int i = 0; i < modules.Count; i++)
             {
@@ -83,6 +87,7 @@ namespace Ignite.Ecs
                 registration.Dispose();
             _saveRegistrations.Clear();
 
+            _views?.UnlinkAll();
             World.Dispose();
             World = null;
             GameLog.Info(Log, "Huỷ World");
